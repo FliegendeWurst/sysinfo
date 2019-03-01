@@ -1,0 +1,10 @@
+[package]
+name = "sysinfo"
+version = "0.1.0"
+authors = ["FliegendeWurst <2012gdwu@web.de>"]
+edition = "2018"
+
+[profile.release]
+panic = 'abort'
+
+[dependencies]
