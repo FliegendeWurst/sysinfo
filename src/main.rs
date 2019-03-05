@@ -11,5 +11,5 @@ fn main() {
     let mut meminfo = meminfo.split('\n');
     let total = meminfo.next().unwrap().split_whitespace().nth(1).unwrap().parse::<u64>().unwrap() / 1_000;
     let available = meminfo.nth(1).unwrap().split_whitespace().nth(1).unwrap().parse::<u64>().unwrap() / 1_000;
-    println!("{:.1}% {:.1}°C {}/{}MB", load / num_cpus * 100.0, temp, available, total);
+    println!("{:.1}% {:.1}°C {}/{}MB", load / num_cpus * 100.0, temp, total - available, total);
 }
