@@ -1,0 +1,5 @@
+# sysinfo
+
+Measures real CPU usage by reading `/proc/stat` twice, using a delay of 500ms.
+Temperature read from `/sys/class/hwmon/hwmon0/temp1_input`.
+RAM usage read from `/proc/meminfo` (MemAvailable, MemTotal). 
