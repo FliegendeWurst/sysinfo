@@ -14,12 +14,11 @@ fn main() {
 		.count() as f64;
 	*/
 	let real_load = (stat_2 - stat_1) * 1000 / (WAIT_MS as u64);
-	let temp = fs::read_to_string("/sys/class/hwmon/hwmon0/temp1_input").unwrap().trim().parse::<f64>().unwrap() / 1000.0;
+	let temp = fs::read_to_string("/sys/class/hwmon/hwmon2/temp1_input").unwrap().trim().parse::<u64>().unwrap() / 1000;
 	let meminfo = fs::read_to_string("/proc/meminfo").unwrap();
 	let mut meminfo = meminfo.split('\n');
 	let total = meminfo.next().unwrap().split_whitespace().nth(1).unwrap().parse::<u64>().unwrap() / 1_000;
 	let available = meminfo.nth(1).unwrap().split_whitespace().nth(1).unwrap().parse::<u64>().unwrap() / 1_000;
-	//println!("{:.1}% {:.1}°C {}/{}MB", load / num_cpus * 100.0, temp, total - available, total);
 	println!("{}% {:.1}°C {}/{}MB", real_load, temp, total - available, total);
 }
 
