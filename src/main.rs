@@ -1,4 +1,7 @@
-use std::{env, fs, time::Duration};
+use std::{
+	env, fs,
+	time::{Duration, Instant},
+};
 
 const WAIT_MS: u64 = 500;
 
@@ -7,10 +10,12 @@ fn main() {
 		.nth(1)
 		.unwrap_or_else(|| "/sys/class/hwmon/hwmon2/temp1_input".to_owned());
 
+	let start = Instant::now();
 	let stat_1 = extract_stat();
 	std::thread::sleep(Duration::from_millis(WAIT_MS));
+	let waited = Instant::now().duration_since(start).as_millis();
 	let stat_2 = extract_stat();
-	let real_load = (stat_2 - stat_1) * 1000 / (WAIT_MS as u64);
+	let real_load = (stat_2 - stat_1) * 1000 / (waited as u64);
 	let temp = fs::read_to_string(temp_input).unwrap().trim().parse::<u64>().unwrap() / 1000;
 	let meminfo = fs::read_to_string("/proc/meminfo").unwrap();
 	let meminfo = meminfo.split('\n').collect::<Vec<_>>();
